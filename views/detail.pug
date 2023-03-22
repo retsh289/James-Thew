@@ -1,0 +1,131 @@
+extends layout
+
+block content
+    .heading-page.header-text
+      section.page-heading
+        .container
+          .row
+            .col-lg-12
+              .text-content
+                h4=dataPost[0].tagName
+                h2=dataPost[0].categoryName
+    // Banner Ends Here
+    section.call-to-action
+      .container
+        .row
+          .col-lg-12
+            .main-content
+              .row
+                .col-lg-8
+                  span Stand Blog HTML5 Template
+                  h4 Creative HTML Template For Bloggers!
+                .col-lg-4
+                  .main-button
+                    a(href='/subscribe', target='_parent') Subscribe Now!
+    section.blog-posts.grid-system
+      .container
+        .row
+          .col-lg-8
+            .all-blog-posts
+              .row
+                .col-lg-12
+                  .blog-post
+                    .blog-thumb
+                      img(src='/uploads/'+dataPost[0].postImage alt='' style='height:600px')
+                    .down-content
+                      span=dataPost[0].tagName
+                      a(href='/blog/detail/' + dataPost[0].postId)
+                        h4=dataPost[0].postName
+                      ul.post-info
+                        li
+                          a(href='#') James Thew
+                        li
+                          a=dataPost[0].createdDate.toString().slice(4,15)
+                      p=dataPost[0].postDescription
+                      p !{dataPost[0].postContent}
+                      .post-options
+                        .row
+                          .col-6
+                            ul.post-tags
+                              li
+                                i.fa.fa-tags
+                              li
+                                a(href='#')=dataPost[0].categoryName
+                          .col-6
+                            ul.post-share
+                              li
+                                i.fa.fa-share-alt
+                              li
+                                a(href='#') Facebook
+                                | ,
+                              li
+                                a(href='#')  Twitter
+                .col-lg-12
+                  .sidebar-item.comments
+                    .sidebar-heading
+                      h2 #{count[0].count} comments
+                    .content
+                      ul
+                        each item in rows
+                          li
+                            .right-content
+                              h4.mb-2=item.userName
+                                span(style="color: #f48840; font-weight:bold")=item.statusName
+                                span=item.createdDate.toString().slice(4,15)
+                              p=item.commentContent
+                .col-lg-12
+                  .sidebar-item.submit-comment
+                    .sidebar-heading
+                      h2 Your comment
+                    .content
+                      form#comment(action='/comment/'+ dataPost[0].postId, method='post')
+                        .row
+                          .col-lg-12
+                            fieldset
+                              textarea#message(name='content', rows='6', placeholder='Type your comment')
+                          .col-md-12
+                              .row.ml-5
+                                each status in dataStat
+                                  .col-md-3.row
+                                    input.mr-4#1(type='radio', name='status', value=status.statusId, style="width: 20px")
+                                    label(style="margin-top: 12px; font-weight:bold")=status.statusName
+                          .col-lg-12
+                            fieldset
+                              button#form-submit.main-button(type='submit') Submit
+          .col-lg-4
+            .sidebar
+              .row
+                .col-lg-12
+                  .sidebar-item.search
+                    form#search_form(name='gs', method='GET', action='#')
+                      input.searchText(type='text', name='q', placeholder='type to search...', autocomplete='on')
+                .col-lg-12
+                  .sidebar-item.recent-posts
+                    .sidebar-heading
+                      h2 Recent Posts
+                    .content
+                      ul
+                        each item in dataAll
+                          li
+                            a(href='/blog/detail/' + item.postId)
+                              h5=item.postName
+                              span=item.createdDate.toString().slice(4,15)
+                .col-lg-12
+                  .sidebar-item.tags
+                    .sidebar-heading
+                      h2 Categories
+                    .content
+                      ul
+                        each item in dataCate
+                          li
+                            a(href='/category/'+ item.categoryId)=item.categoryName
+                .col-lg-12
+                  .sidebar-item.tags
+                    .sidebar-heading
+                      h2 Tag
+                    .content
+                      ul
+                        each item in dataTag
+                          li
+                            a(href='/tag/'+ item.tagId)=item.tagName
+                          

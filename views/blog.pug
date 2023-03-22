@@ -1,0 +1,86 @@
+extends layout
+
+block content
+    .heading-page.header-text
+      section.page-heading
+        .container
+          .row
+            .col-lg-12
+              .text-content
+                h4= `${title}`
+                h2 Our Recent Blog Entries
+    // Banner Ends Here
+    section.call-to-action
+      .container
+        .row
+          .col-lg-12
+            .main-content
+              .row
+                .col-lg-8
+                  span Subscribe
+                  h4 For more delicious recipes !!!
+                .col-lg-4
+                  .main-button
+                    a(href='/subscribe/'+session.userId, target='_parent') Subscribe now!
+    section.blog-posts.grid-system
+      .container
+        .row
+          .col-lg-8
+            .all-blog-posts
+              each post in dataPost
+                .row
+                  .col-lg-12
+                    .blog-post
+                      .blog-thumb
+                        img(src='/uploads/'+post.postImage alt='' style='height:500px')
+                      .down-content
+                        span=post.tagName
+                        a(href="/blog/detail/"+ post.postId+"")
+                          h4=post.postName
+                        ul.post-info
+                          li
+                            a(href='#') Admin
+                          li
+                            a=post.createdDate.toString().slice(4,15)
+                        p=post.postDescription 
+          .col-lg-4
+            .sidebar
+              .row
+                .col-lg-12
+                  .sidebar-item.search
+                    form#search_form( method='POST' action='/search/')
+                    .row
+                      .col-10
+                        input.searchText(type='text' name='input' placeholder='type to search post' autocomplete='on')
+                      .col-2                          
+                        button.search-button(href='/subscribe/'+ session.userId target='_parent') 
+                          i.bi.bi-search 
+                .col-lg-12
+                  .sidebar-item.recent-posts
+                    .sidebar-heading
+                      h2 Recent Posts
+                    .content
+                      ul
+                        each item in dataAll
+                          li
+                            a(href='/blog/detail/' + item.postId)
+                              h5=item.postName
+                              span=item.createdDate.toString().slice(4,15)
+                .col-lg-12
+                  .sidebar-item.tags
+                    .sidebar-heading
+                      h2 Categories
+                    .content
+                      ul
+                        each item in dataCate
+                          li
+                            a(href='/category/'+ item.categoryId)=item.categoryName
+                .col-lg-12
+                  .sidebar-item.tags
+                    .sidebar-heading
+                      h2 Tag
+                    .content
+                      ul
+                        each item in dataTag
+                          li
+                            a(href='/tag/'+ item.tagId)=item.tagName

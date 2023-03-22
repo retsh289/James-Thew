@@ -1,0 +1,43 @@
+extends layout
+
+block content 
+    section.content-header
+      .container-fluid
+        .row.mb-1.ml-5
+          h1 Post 
+    .card.card-primary.m-5
+      .card-header
+        h3.card-title Create a new post
+      form(action='/admin/post/create' method='POST' enctype="multipart/form-data")
+        .card-body
+          .form-group
+            label(for='name') Post's Title 
+            input#name.form-control(type='text', placeholder='Enter name', name='name')
+          .form-group
+            label(for='image') Image
+            .input-group
+              input#image(type='file', name='image')
+          .form-group
+              label(for='description') Description
+              textarea#description.form-control(type='text', placeholder='Description', name='description', , rows='6')
+          .form-group
+            label(for='content') Content
+              textarea#content.form-control(type='text', name='content', rows='10')
+          .form-group
+            label 
+              input.mr-4#non(type='radio', name='subscribe', value=0,  style="width: 10px")
+              label(for='non' , style="margin-top: 12px; font-weight:bold") Non-subscribed
+              input.mr-4#sub(type='radio', name='subscribe', value=1, style="width: 20px;margin-left: 15px")
+              label(for='sub' , style="margin-top: 12px; font-weight:bold") Subscribed
+          .form-group
+            label Tag 
+              select.form-control.mt-2(name='tagId')
+                each item in dataTag
+                  option(value=item.tagId)=item.tagName
+          .form-group
+            label Category
+              select.form-control.mt-2(name='categoryId')
+                each item in dataCate
+                  option(value=item.categoryId)=item.categoryName
+        .card-footer
+          button.btn.btn-primary(type='submit') Submit
